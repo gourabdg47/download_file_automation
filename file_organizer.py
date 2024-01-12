@@ -187,6 +187,24 @@ class FileMoveHandler(FileSystemEventHandler):
     #         logging.info(f"Moved document file: {name}")
 
 
+# Method to get called from Flask app
+def start_file_observer():
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s - %(message)s',
+                        datefmt='%Y-%m-%d %H:%M:%S')
+
+    path = DEFAULT_DOWNLOAD_PATH
+    event_handler = FileMoveHandler()
+    observer = Observer()
+    observer.schedule(event_handler, path, recursive=True)
+    observer.start()
+    try:
+        while True:
+            sleep(10)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
