@@ -1,0 +1,86 @@
+body {
+    background-color: #222;
+    color: #ddd;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #333;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+}
+
+.container:hover {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+h1, h2 {
+    color: #3498db;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    background-color: #444;
+    color: #ddd;
+    border: 1px solid #666;
+    transition: border-color 0.3s;
+}
+
+.form-control:hover, .form-control:focus {
+    border-color: #3498db;
+}
+
+.input-group-append button {
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid #3498db;
+    transition: background-color 0.3s;
+}
+
+.input-group-append button:hover {
+    background-color: #2980b9;
+}
+
+/* Added space between input and buttons */
+.input-group-append {
+    margin-left: 10px;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid #3498db;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.file-counts {
+    background-color: #444;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.file-counts h2 {
+    color: #3498db;
+}
+
+.file-counts ul {
+    list-style: none;
+    padding: 0;
+}
+
+.file-counts li {
+    margin-bottom: 8px;
+}

@@ -192,6 +192,7 @@ def start_file_observer():
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
+    file_organizer_logger = logging.getLogger(__name__)
 
     path = DEFAULT_DOWNLOAD_PATH
     event_handler = FileMoveHandler()
@@ -210,6 +211,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
+    file_organizer_logger = logging.getLogger(__name__)
     
     path = DEFAULT_DOWNLOAD_PATH
     event_handler = FileMoveHandler()

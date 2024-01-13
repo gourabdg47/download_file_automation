@@ -1,19 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Categories</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <title>File Organizer</title>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1 class="text-center">File Organizer</h1>
+            
+            <form action="/start_observer" method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" id="source_path" name="source_path" placeholder="Source Path" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">Browse</button>
+                        </div>
+                    </div>
+                </div>
 
-    <h1>File Categories and Counts</h1>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" id="destination_path" name="destination_path" placeholder="Destination Path" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">Browse</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary float-right" id="start_observer_btn" disabled>Start Observer</button>
+            </form>
 
-    <ul>
-        {% for category, count in zipped_data %}
-            <li>{{ category }}: {{ count }}</li>
-        {% endfor %}
-    </ul>
+            <div class="file-counts mt-4">
+                <h2>File Counts</h2>
+                <ul>
+                    <li>Images: {{ image_count }}</li>
+                    <li>Videos: {{ video_count }}</li>
+                    <li>Music: {{ music_count }}</li>
+                    <li>SFX: {{ sfx_count }}</li>
+                    <li>Docs: {{ doc_count }}</li>
+                    <li>Software: {{ software_count }}</li>
+                </ul>
+            </div>
+        </div>
 
-</body>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+        <script>
+            const sourcePathInput = document.getElementById('source_path');
+            const destinationPathInput = document.getElementById('destination_path');
+            const startObserverBtn = document.getElementById('start_observer_btn');
+
+            sourcePathInput.addEventListener('input', validateForm);
+            destinationPathInput.addEventListener('input', validateForm);
+
+            function validateForm() {
+                if (sourcePathInput.checkValidity() && destinationPathInput.checkValidity()) {
+                    startObserverBtn.removeAttribute('disabled');
+                } else {
+                    startObserverBtn.setAttribute('disabled', true);
+                }
+            }
+
+            
+            document.getElementById('startObserverForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                fetch('/start_observer')
+                    .then(response => response.text())
+                    .then(data => alert(data))
+                    .catch(error => console.error('Error starting file observer:', error));
+            });
+            
+        </script>
+    </body>
 </html>

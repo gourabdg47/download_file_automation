@@ -1,20 +1,29 @@
 from flask import Flask, render_template
-from file_organizer import start_file_observer
+from file_organizer import DEFAULT_DOWNLOAD_PATH, FileMoveHandler, start_file_observer
+
+import logging
 
 app = Flask(__name__)
 
-# Start the file observer in a separate thread
-# start_file_observer()
-
-# Assuming you have 'categories' and 'file_counts' lists
-categories = ["Images", "Videos", "Music", "Softwares", "SFX", "Docs"]
-file_counts = [10, 5, 8, 12, 3, 6]
+# Configure Flask app logger
+app.logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+file_handler = logging.FileHandler('flask_app.log')
+file_handler.setFormatter(formatter)
+app.logger.addHandler(file_handler)
 
 @app.route('/')
 def index():
-    # Zip the two lists
-    zipped_data = zip(categories, file_counts)
-    return render_template('index.html', zipped_data=zipped_data)
+    app.logger.info('Accessing index page')
+    return render_template('index.html', 
+                           source_path=DEFAULT_DOWNLOAD_PATH)
 
-if __name__ == '__main__':
+@app.route('/start_observer', methods=['GET', 'POST'])
+def start_observer():
+    app.logger.info('Starting file observer')
+    start_file_observer()
+    return 'File observer started successfully.'
+
+
+if __name__ == "__main__":
     app.run(debug=True)
